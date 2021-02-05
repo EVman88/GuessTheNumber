@@ -1,0 +1,59 @@
+const prompt = require('readline-sync');
+
+// Step 1: Create your variables
+const maxGuesses = 3;
+let currentGuess = 0;
+const maxRange = 10;
+
+// Step 3: Use the Math module to create a variable that is equal to a random number between 1 and 10
+let randomNumber = Math.floor(Math.random() * maxRange + 1);
+
+
+// Step 4: Set a variable that is equal to a user's input in response to a question that will be displayed on their console. Use a method from the readline-sync library. The question should be a special kind of string that will allow us to insert some JavaScript variables inside of it.
+let userGuess = prompt.question(`Hi, I've chosen a number between 1 and ${maxRange}.\n You have ${maxGuesses} tries to guess it.\n`)
+
+
+// Step 5: Write a function. The function should expect to have a user's guess passed to it as an argument.
+
+const handleGuess = (userGuess) => {
+  // Step 6: Implement some logic that will output a different message depending on if the user's guess was equal to, greater than, or less than the random number that was generated. Then, add in some logic that will reassign the variable representing a user's current guess to be its previous value plus one, if a user's guess is greater than or less than the random number, and output a message to your user that will tell them how many guesses they have left. In those cases, reassign the variable representing a user's guess to be equal to a new user input. Finally, allow the user to have three guesses: add some functionality that will repeat your code. This means you'll write something called a for loop, and add a new piece of conditional logic.
+  for (let guesses = 0; guesses < maxGuesses; guesses++) {
+  if (userGuess == randomNumber) {
+    console.log("You won!");
+    playAgain();
+  } else if (guesses === maxGuesses - 1) { 
+    console.log(`You lose. The number was ${randomNumber}.`);
+    playAgain();
+  } else if (userGuess > randomNumber) {
+    console.log("Think lower!");
+    currentGuess++;
+    console.log(`Guesses left: ${maxGuesses - currentGuess}.`)
+    userGuess = prompt.question('Guess again...\n');
+    console.log(userGuess);
+    } else {
+      console.log("Think higher!");
+      currentGuess++;
+      console.log(`Guesses left: ${maxGuesses - currentGuess}.`);
+      userGuess = prompt.question('Guess again...\n');
+      console.log(userGuess);
+    }
+  }
+}
+
+// Step 7: Write another function that will allow users to play again once they win or lose. Invoke the function when a user wins or loses.
+
+const playAgain = () => {
+  let playAgain = prompt.question('Do you want to play again? y || n.\n' ) ;
+  if (playAgain === 'y') {
+    randomNumber = Math.floor(Math.random() * maxRange + 1);
+    let newGuess = prompt.question(`Hi again! I've chosen a number between 1 and ${maxRange}.\n You have ${maxGuesses} tries to guess it.\n`);
+    currentGuess = 0;
+    guesses = 0;
+    handleGuess(newGuess)
+  } else {
+    console.log('Fine. Bye!')
+  }
+}
+
+
+handleGuess(userGuess);
